@@ -1,6 +1,6 @@
 var express = require('express');
 
-function Maker(){
+function Article(){
 	var mysql      = require('mysql');
 	var connection = mysql.createConnection({
 	  host     : 'localhost',
@@ -11,7 +11,7 @@ function Maker(){
 	connection.query('use rodman');
 
 
-	this.test = function(maker, callback){
+	this.save = function(maker, callback){
 
 		var ret;
 
@@ -28,6 +28,7 @@ function Maker(){
 		});
 	}
 
+
 }
 
-module.exports = Maker;
+module.exports = Article;

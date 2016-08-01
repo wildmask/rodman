@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var database = require('./database');
+var database = require('./database/article');
 
 var db = new database();
 
@@ -31,7 +31,7 @@ router.get('/console', function(req, res, next) {
 
 router.get('/database', function(req, res, next) {
   	console.log("hello");
-  	db.test("hello", function(result){
+  	db.save("hello", function(result){
 		res.send(result);
 	});
 });
