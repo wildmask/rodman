@@ -5,18 +5,41 @@
 
 
 <body>
-	<div style="margin:auto; width:400px; height: 300px;">
+	<div style="margin:auto; width:400px; height: 300px; position:relative; top: 100px;">
 
-		<table class="table">
-			<form ation="" method="post">
-			<tr><td>登入</td> </tr>
-			<tr><td><input class="form-control" name="name" value=""></td> </tr>
-			<tr><td><input class="form-control" name="password" value=""></td> </tr>
+		<table class="table" id="login">
+			<form ation="/login" method="post">
+			<tr><td><input class="form-control" name="name" value="" placeholder="name"></td> </tr>
+			<tr><td><input class="form-control" name="password" value="" placeholder="password"></td> </tr>
+			<tr>
+				<td style="text-align:center;">
+					<button class="btn btn-default"> 登入 </button>
+				</td>
+			</tr>
 			</form>
 		</table>
 
 	</div>
 
 </body>
+
+
+<style type="text/css">
+table#login{
+	border: 1px solid #ccc;
+}
+
+
+table#login>tbody>tr{
+	border: 0px;
+}
+
+table#login>tbody>tr>td{
+	border: 0px;
+	padding: 10px 20px;
+}
+
+
+</style>
 
 </html>

@@ -11,7 +11,7 @@ function Article(){
 	connection.query('use rodman');
 
 
-	this.save = function(maker, callback){
+	this.test = function(maker, callback){
 
 		var ret;
 
@@ -23,6 +23,38 @@ function Article(){
 		});
 	}
 
+	this.update = function(article, callback){
+		var data = ['title', 'content', 'summary', 'key_word', 1];
+		var sql = "update article set title=?, content=?, summary=?, key_word=? where article_id=?";
+		connection.query(sql, data, function(err,res){
+			callback(res);
+		});
+	}
+
+
+	this.create = function(article, callback){
+		var data = ['hello', 'test'];
+		var sql = "insert into article (title, content) values (?, ?)";
+		connection.query(sql, data, function(err,res){
+			callback(res);
+		});
+	}
+
+	this.readCountInc = function(article_id, callback){
+		var data = [article_id];
+		var sql = "update article set read_count = read_count+1 where article_id=?";
+		connection.query(sql, data, function(err,res){
+			callback(res);
+		});
+	}
+
+	this.commentCountInc = function(article_id, callback){
+		var data = [article_id];
+		var sql = "update article set comment_count = comment_count+1 where article_id=?";
+		connection.query(sql, data, function(err,res){
+			callback(res);
+		});
+	}
 
 }
 
