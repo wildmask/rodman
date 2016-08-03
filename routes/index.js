@@ -8,20 +8,7 @@ var database2 = require('./database/user');
 var user = new database2();
 
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index');
-});
 
-// test page
-router.get('/test', function(req, res, next) {
-  res.render('test');
-});
-
-// ueditor test page
-router.get('/ueditor', function(req, res, next) {
-  res.render('ueditor');
-});
 
 
 

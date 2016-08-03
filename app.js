@@ -39,6 +39,7 @@ app.use(session({
 
 
 app.use(function(req,res,next){
+  console.log("user:" + req.session.user);
   if (!req.session.user) {
     if(req.url=="/login"){
       next();
@@ -83,12 +84,45 @@ app.get('/login', function(req, res, next) {
 // login request:
 app.post('/login', function(req, res, next) {
     if(req.body.username=='rodmanzhuo' && req.body.password=='cuhk'){
+      var user = {'username':'love'};
+      req.session.user = user;
       res.render('console_homepage');
     }else{
       res.render('login');
     }
 });
 
+
+app.get('/logout',function(req,res){
+  req.session.user = null;
+  res.render('login');
+});
+
+
+
+/* GET home page. */
+app.get('/', function(req, res, next) {
+  res.render('index');
+});
+
+// test page
+app.get('/test', function(req, res, next) {
+  res.render('test');
+});
+
+// ueditor test page
+app.get('/ueditor', function(req, res, next) {
+  res.render('ueditor');
+});
+
+
+app.get('/console_homepage', function(req, res, next) {
+  res.render('console_homepage');
+});
+
+app.get('/console_article', function(req, res, next) {
+  res.render('console_article');
+});
 
 
 // catch 404 and forward to error handler
@@ -97,7 +131,6 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
-
 
 // error handlers
 
