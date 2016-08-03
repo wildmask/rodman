@@ -7,6 +7,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var session = require('express-session');
+
 var routes = require('./routes/index');
 
 var ueditor = require("ueditor");
@@ -28,6 +30,25 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
+
+app.use(session({
+  resave: true, // don't save session if unmodified
+  saveUninitialized: false, // don't create session until something stored
+  secret: 'love'
+}));
+
+
+app.use(function(req,res,next){
+  if (!req.session.user) {
+    if(req.url=="/login"){
+      next();
+    }else{
+      res.redirect('login');
+    }
+  } else if (req.session.user) {
+    next();
+  }
+});
 
 
 app.use("/ueditor/ue", ueditor(path.join(__dirname, 'public'), function (req, res, next) {
@@ -53,6 +74,21 @@ app.use("/ueditor/ue", ueditor(path.join(__dirname, 'public'), function (req, re
         res.redirect('/ueditor/nodejs/config.json');
     }
 }));
+
+// login page
+app.get('/login', function(req, res, next) {
+  res.render('login');
+});
+
+// login request:
+app.post('/login', function(req, res, next) {
+    if(req.body.username=='rodmanzhuo' && req.body.password=='cuhk'){
+      res.render('console_homepage');
+    }else{
+      res.render('login');
+    }
+});
+
 
 
 // catch 404 and forward to error handler

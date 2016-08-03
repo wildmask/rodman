@@ -23,17 +23,13 @@ router.get('/ueditor', function(req, res, next) {
   res.render('ueditor');
 });
 
-// login page
-router.get('/login', function(req, res, next) {
-  res.render('login');
-});
 
 
 // database operation
 router.get('/database', function(req, res, next) {
-  	console.log("hello");
-  	article.save("hello", function(result){
-		  res.send(result);
+    console.log("hello");
+    article.save("hello", function(result){
+      res.send(result);
     });
 });
 
@@ -48,13 +44,5 @@ router.get('/test/update', function(req, res, next) {
 });
 
 
-// login request:
-router.post('/login', function(req, res, next) {
-    if(req.body.name=='rodmanzhuo' && req.body.password=='cuhk'){
-      res.render('console');
-    }else{
-      res.render('login');
-    }
-});
 
 module.exports = router;
