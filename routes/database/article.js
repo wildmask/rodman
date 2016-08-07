@@ -23,6 +23,17 @@ function Article(){
 		});
 	}
 
+
+	this.getList = function(time, callback){
+
+		var sql = "select * from article";
+		connection.query(sql, function(err, res){
+			console.log(res);
+			callback(res);
+		});
+	}
+
+
 	this.update = function(article, callback){
 		var data = ['title', 'content', 'summary', 'key_word', 1];
 		var sql = "update article set title=?, content=?, summary=?, key_word=? where article_id=?";

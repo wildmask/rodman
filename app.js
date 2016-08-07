@@ -13,6 +13,12 @@ var routes = require('./routes/index');
 
 var ueditor = require("ueditor");
 
+var database1 = require('./routes/database/article');
+var article = new database1();
+
+var database2 = require('./routes/database/user');
+var user = new database2();
+
 
 var app = express();
 
@@ -31,26 +37,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 
-app.use(session({
-  resave: true, // don't save session if unmodified
-  saveUninitialized: false, // don't create session until something stored
-  secret: 'love'
-}));
 
 
-app.use(function(req,res,next){
-  console.log("user:" + req.session.user);
-  if (!req.session.user) {
-    if(req.url=="/login"){
-      next();
-    }else{
-      res.redirect('login');
-    }
-  } else if (req.session.user) {
-    next();
-  }
-});
-
+// ueditor
 
 app.use("/ueditor/ue", ueditor(path.join(__dirname, 'public'), function (req, res, next) {
     // ueditor 客户发起上传图片请求
@@ -76,53 +65,78 @@ app.use("/ueditor/ue", ueditor(path.join(__dirname, 'public'), function (req, re
     }
 }));
 
+
+/* login and logout with session control */
+
+// use session
+app.use(session({
+  resave: true, // don't save session if unmodified
+  saveUninitialized: false, // don't create session until something stored
+  secret: 'love'
+}));
+
+
+// if not login and not login page, rediret to login page
+app.use(function(req,res,next){
+  console.log("user:" + req.session.user);
+  if (!req.session.user) {
+    if(req.url=="/login"){
+      next();
+    }else{
+      res.redirect('login');
+    }
+  } else if (req.session.user) {
+    next();
+  }
+});
+
 // login page
 app.get('/login', function(req, res, next) {
   res.render('login');
 });
 
-// login request:
+// login request: create session
 app.post('/login', function(req, res, next) {
     if(req.body.username=='rodmanzhuo' && req.body.password=='cuhk'){
       var user = {'username':'love'};
       req.session.user = user;
-      res.render('console_homepage');
+      res.render('console_home');
     }else{
       res.render('login');
     }
 });
 
-
+// logout request: delete session
 app.get('/logout',function(req,res){
   req.session.user = null;
   res.render('login');
 });
 
+/* login and logout end */
 
 
-/* GET home page. */
-app.get('/', function(req, res, next) {
-  res.render('index');
+// console control
+
+
+app.get('/console_home', function(req, res, next) {
+  res.render('console_home');
 });
 
-// test page
-app.get('/test', function(req, res, next) {
-  res.render('test');
-});
-
-// ueditor test page
-app.get('/ueditor', function(req, res, next) {
-  res.render('ueditor');
-});
-
-
-app.get('/console_homepage', function(req, res, next) {
-  res.render('console_homepage');
+app.get('/console_articlelist', function(req, res, next) {
+  res.render('console_articlelist');
 });
 
 app.get('/console_article', function(req, res, next) {
   res.render('console_article');
 });
+
+
+app.get('/article/list', function(req, res, next) {
+  article.getList("hello", function(result){
+    res.send(result);
+  });
+});
+
 
 
 // catch 404 and forward to error handler
