@@ -68,30 +68,46 @@
                         </a>
                     </li>
 
-              </ul>
-          </div>
-      </aside>
+                </ul>
+            </div>
+        </aside>
 
       <!--main content start-->
-      <section id="main-content">
-          <section class="wrapper">
-          <div class="row">
+        <section id="main-content">
+            <section class="wrapper">
+            <div class="row">
                 <div class="col-lg-12">
                     <h3 class="page-header"><i class="fa fa fa-bars"></i> Pages</h3>
                     <ol class="breadcrumb">
-                        <li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
+                        <li><i class="fa fa-home"></i><a href="/console_home">Home</a></li>
                         <li><i class="fa fa-bars"></i>Pages</li>
-                        <li><i class="fa fa-square-o"></i>Pages</li>
+                        <li><i class="fa fa-square-o"></i>Article</li>
                     </ol>
                 </div>
             </div>
               <!-- page start-->
 
-                <div>
-                    <h1>完整demo</h1>
-                    <script id="editor" type="text/plain" style="width:1024px;height:500px;"></script>
-                </div>
-                <div id="btns">
+            <div style="display:inline">
+                <span style="font:20px;">标题 : </span> 
+                <span><input type="text" class="form-control" style="width:300px;display:inline" name='title' id='title' placeholder='title'>  </span>
+                <span style="font:20px; marign-left: 100px;">关键词 : </span> 
+                <span><input type="text" class="form-control" style="width:300px;display:inline" name='key_word' id='key_word' placeholder='key_word'>  </span>
+            </div>
+            <br/>
+            <div style="margin-top:20px;">
+                <span style="font:20px;">摘要 : </span> 
+                <span><textarea class="form-control" style="width:800px; height:80px; display:inline" name='summary' id='summary'> </textarea> </span>
+            </div>
+
+            <br/>
+
+            <div>
+                <script id="editor" type="text/plain" style="width:1024px;height:500px;"></script>
+            </div>
+
+            <button id="save" class="btn btn-info">save</button>
+
+<!--            <div id="btns">
                     <div>
                         <button onclick="getAllHtml()">获得整个html的内容</button>
                         <button onclick="getContent()">获得内容</button>
@@ -113,124 +129,145 @@
                         <button onclick=" UE.getEditor('editor').setHide()">隐藏编辑器</button>
                         <button onclick=" UE.getEditor('editor').setShow()">显示编辑器</button>
                     </div>
-
                 </div>
+
                 <div>
                     <button onclick="createEditor()">
                     创建编辑器</button>
                     <button onclick="deleteEditor()">
                     删除编辑器</button>
-                </div>
-
-                <script type="text/javascript">
-
-                    //实例化编辑器
-                    //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
-                    var ue = UE.getEditor('editor');
+                </div>  -->
 
 
-                    function isFocus(e){
-                        alert(UE.getEditor('editor').isFocus());
-                        UE.dom.domUtils.preventDefault(e)
-                    }
-                    function setblur(e){
-                        UE.getEditor('editor').blur();
-                        UE.dom.domUtils.preventDefault(e)
-                    }
-                    function insertHtml() {
-                        var value = prompt('插入html代码', '');
-                        UE.getEditor('editor').execCommand('insertHtml', value)
-                    }
-                    function createEditor() {
-                        enableBtn();
-                        UE.getEditor('editor');
-                    }
-                    function getAllHtml() {
-                        alert(UE.getEditor('editor').getAllHtml())
-                    }
-                    function getContent() {
-                        var arr = [];
-                        arr.push("使用editor.getContent()方法可以获得编辑器的内容");
-                        arr.push("内容为：");
-                        arr.push(UE.getEditor('editor').getContent());
-                        alert(arr.join("\n"));
-                    }
-                    function getPlainTxt() {
-                        var arr = [];
-                        arr.push("使用editor.getPlainTxt()方法可以获得编辑器的带格式的纯文本内容");
-                        arr.push("内容为：");
-                        arr.push(UE.getEditor('editor').getPlainTxt());
-                        alert(arr.join('\n'))
-                    }
-                    function setContent(isAppendTo) {
-                        var arr = [];
-                        arr.push("使用editor.setContent('欢迎使用ueditor')方法可以设置编辑器的内容");
-                        UE.getEditor('editor').setContent('欢迎使用ueditor', isAppendTo);
-                        alert(arr.join("\n"));
-                    }
-                    function setDisabled() {
-                        UE.getEditor('editor').setDisabled('fullscreen');
-                        disableBtn("enable");
-                    }
+            <script type="text/javascript">
 
-                    function setEnabled() {
-                        UE.getEditor('editor').setEnabled();
-                        enableBtn();
-                    }
+                //实例化编辑器
+                //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+                var ue = UE.getEditor('editor');
 
-                    function getText() {
-                        //当你点击按钮时编辑区域已经失去了焦点，如果直接用getText将不会得到内容，所以要在选回来，然后取得内容
-                        var range = UE.getEditor('editor').selection.getRange();
-                        range.select();
-                        var txt = UE.getEditor('editor').selection.getText();
-                        alert(txt)
-                    }
 
-                    function getContentTxt() {
-                        var arr = [];
-                        arr.push("使用editor.getContentTxt()方法可以获得编辑器的纯文本内容");
-                        arr.push("编辑器的纯文本内容为：");
-                        arr.push(UE.getEditor('editor').getContentTxt());
-                        alert(arr.join("\n"));
-                    }
-                    function hasContent() {
-                        var arr = [];
-                        arr.push("使用editor.hasContents()方法判断编辑器里是否有内容");
-                        arr.push("判断结果为：");
-                        arr.push(UE.getEditor('editor').hasContents());
-                        alert(arr.join("\n"));
-                    }
-                    function setFocus() {
-                        UE.getEditor('editor').focus();
-                    }
-                    function deleteEditor() {
-                        disableBtn();
-                        UE.getEditor('editor').destroy();
-                    }
-                    function disableBtn(str) {
-                        var div = document.getElementById('btns');
-                        var btns = UE.dom.domUtils.getElementsByTagName(div, "button");
-                        for (var i = 0, btn; btn = btns[i++];) {
-                            if (btn.id == str) {
-                                UE.dom.domUtils.removeAttributes(btn, ["disabled"]);
-                            } else {
-                                btn.setAttribute("disabled", "true");
-                            }
-                        }
-                    }
-                    function enableBtn() {
-                        var div = document.getElementById('btns');
-                        var btns = UE.dom.domUtils.getElementsByTagName(div, "button");
-                        for (var i = 0, btn; btn = btns[i++];) {
+                function isFocus(e){
+                    alert(UE.getEditor('editor').isFocus());
+                    UE.dom.domUtils.preventDefault(e)
+                }
+                function setblur(e){
+                    UE.getEditor('editor').blur();
+                    UE.dom.domUtils.preventDefault(e)
+                }
+                function insertHtml() {
+                    var value = prompt('插入html代码', '');
+                    UE.getEditor('editor').execCommand('insertHtml', value)
+                }
+                function createEditor() {
+                    enableBtn();
+                    UE.getEditor('editor');
+                }
+                function getAllHtml() {
+                    alert(UE.getEditor('editor').getAllHtml())
+                }
+                function getContent() {
+                    var arr = [];
+                    arr.push("使用editor.getContent()方法可以获得编辑器的内容");
+                    arr.push("内容为：");
+                    arr.push(UE.getEditor('editor').getContent());
+                    alert(arr.join("\n"));
+                }
+                function getPlainTxt() {
+                    var arr = [];
+                    arr.push("使用editor.getPlainTxt()方法可以获得编辑器的带格式的纯文本内容");
+                    arr.push("内容为：");
+                    arr.push(UE.getEditor('editor').getPlainTxt());
+                    alert(arr.join('\n'))
+                }
+                function setContent(isAppendTo) {
+                    var arr = [];
+                    arr.push("使用editor.setContent('欢迎使用ueditor')方法可以设置编辑器的内容");
+                    UE.getEditor('editor').setContent('欢迎使用ueditor', isAppendTo);
+                    alert(arr.join("\n"));
+                }
+                function setDisabled() {
+                    UE.getEditor('editor').setDisabled('fullscreen');
+                    disableBtn("enable");
+                }
+
+                function setEnabled() {
+                    UE.getEditor('editor').setEnabled();
+                    enableBtn();
+                }
+
+                function getText() {
+                    //当你点击按钮时编辑区域已经失去了焦点，如果直接用getText将不会得到内容，所以要在选回来，然后取得内容
+                    var range = UE.getEditor('editor').selection.getRange();
+                    range.select();
+                    var txt = UE.getEditor('editor').selection.getText();
+                    alert(txt)
+                }
+
+                function getContentTxt() {
+                    var arr = [];
+                    arr.push("使用editor.getContentTxt()方法可以获得编辑器的纯文本内容");
+                    arr.push("编辑器的纯文本内容为：");
+                    arr.push(UE.getEditor('editor').getContentTxt());
+                    alert(arr.join("\n"));
+                }
+                function hasContent() {
+                    var arr = [];
+                    arr.push("使用editor.hasContents()方法判断编辑器里是否有内容");
+                    arr.push("判断结果为：");
+                    arr.push(UE.getEditor('editor').hasContents());
+                    alert(arr.join("\n"));
+                }
+                function setFocus() {
+                    UE.getEditor('editor').focus();
+                }
+                function deleteEditor() {
+                    disableBtn();
+                    UE.getEditor('editor').destroy();
+                }
+                function disableBtn(str) {
+                    var div = document.getElementById('btns');
+                    var btns = UE.dom.domUtils.getElementsByTagName(div, "button");
+                    for (var i = 0, btn; btn = btns[i++];) {
+                        if (btn.id == str) {
                             UE.dom.domUtils.removeAttributes(btn, ["disabled"]);
+                        } else {
+                            btn.setAttribute("disabled", "true");
                         }
                     }
-                </script>
+                }
+                function enableBtn() {
+                    var div = document.getElementById('btns');
+                    var btns = UE.dom.domUtils.getElementsByTagName(div, "button");
+                    for (var i = 0, btn; btn = btns[i++];) {
+                        UE.dom.domUtils.removeAttributes(btn, ["disabled"]);
+                    }
+                }
+            </script>
+
+
+            <!-- 按钮触发模态框 -->
+            <button style="display:none;" id="btn-modal" class="btn btn-primary btn-lg" data-toggle="modal" 
+               data-target="#myModal">
+            </button>
+
+            <!-- 模态框（Modal） -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" 
+               aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <div class="modal-body">
+                            已保存
+                        </div>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+
               <!-- page end-->
-          </section>
-      </section>
+            </section>
+        </section>
       <!--main content end-->
-  </section>
+    </section>
   <!-- container section end -->
     <!-- javascripts -->
     <script src="/niceadmin/js/jquery.js"></script>
@@ -243,27 +280,62 @@
 
     <script type="text/javascript">
     $(document).ready(function(){
-        console.log("hello");
+
+        function getUrlParam(name) {
+          console.log(window.location.search);
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = window.location.search.substr(1).match(reg);  
+            if (r != null) return unescape(r[2]); return null; //返回参数值
+        }
+        var article_id = getUrlParam('id');
+
 
         $.ajax({
-            url:'/article/list',
-            method:'get',
+            url:'/article',
+            method:'post',
             dataType: 'json',
-            success:function(data){
-                var str = "";
-                for(x in data){
-                    console.log(data[x]);
-                    str+= "<tr><td>" + data[x].title + "</td>";
-                    str+= "<td>" + data[x].summary + "</td>";
-                    str+= "<td>" + data[x].key_word + "</td>";
-                    str+= "<td>" + data[x].post_time.substring(0,10) +" "+ data[x].post_time.substring(12,16)  + "</td>";
-                    str+= "<td>" + data[x].read_count + "</td>";
-                    str+= "<td>" + data[x].comment_count + "</td></tr>";
-                    $("#list").append(str);
-
-                }
+            data:{
+                article_id: article_id,
+            },
+            success: function(data){
+                console.log(data);
+                UE.getEditor('editor').execCommand('insertHtml', data[0].content);
+                $("#title").val(data[0].title);
+                $("#summary").val(data[0].summary);
+                $("#key_word").val(data[0].key_word);
             }
         });
+
+        $("#save").click(function(){
+            var content = UE.getEditor('editor').getContent();
+            var title = $("#title").val();
+            var summary = $("#summary").val();
+            var key_word = $("#key_word").val();
+
+            console.log(content);
+
+            $.ajax({
+                url:'/article/update',
+                method:'post',
+                dataType: 'json',
+                data:{
+                    article_id: article_id,
+                    content: content,
+                    title: title,
+                    summary: summary,
+                    key_word: key_word,
+                },
+                success: function(data){
+                    console.log(data);
+                    $("#btn-modal").click();
+                }
+            });
+        });
+
+/*        $("#save").click(function(){
+            console.log("click");
+        });*/
+    
     });
 
 

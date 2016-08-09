@@ -81,7 +81,7 @@
 					<ol class="breadcrumb">
 						<li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
 						<li><i class="fa fa-bars"></i>Pages</li>
-						<li><i class="fa fa-square-o"></i>Pages</li>
+						<li><i class="fa fa-square-o"></i>List</li>
 					</ol>
 				</div>
 			</div>
@@ -94,7 +94,8 @@
                     <col width="10%"></col>
                     <col width="5%"></col>
                     <col width="5%"></col>
-                    <col width="10%"></col>
+                    <col width="5%"></col>
+                    <col width="15%"></col>
                 </colgroup>
                 <tr>
                     <th>标题</th>
@@ -103,6 +104,7 @@
                     <th>发布时间</th>
                     <th>浏览数</th>
                     <th>评论数</th>
+                    <th>状态</th>
                     <th>操作</th>
 
                 </tr>
@@ -127,20 +129,71 @@
     $(document).ready(function(){
         console.log("hello");
 
+
+
+        $("#list").delegate("button.btn-edit", "click", function(){
+            var this_btn = $(this);
+            var article_id = this_btn.attr("id").substring(5);
+            location.href = "/console_article?id="+article_id;
+        });
+
+
+        $("#list").delegate("button.btn-show", "click", function(){
+            var this_btn = $(this);
+            var article_id = this_btn.attr("id").substring(5);
+            $.ajax({
+                url: '/article/setStatus',
+                method: 'post',
+                dataType: 'json',
+                data:{
+                    status: 1,
+                    article_id: article_id,
+                },
+                success:function(data){
+                    console.log("yes");
+                }
+            });
+        });
+
+
+        $("#list").delegate("button.btn-hide", "click", function(){
+            var this_btn = $(this);
+            var article_id = this_btn.attr("id").substring(5);
+            $.ajax({
+                url: '/article/setStatus',
+                method: 'post',
+                dataType: 'json',
+                data:{
+                    status: 0,
+                    article_id: article_id,
+                },
+                success:function(data){
+                    console.log("yes");
+                }
+            });
+        });
+
         $.ajax({
             url:'/article/list',
             method:'get',
             dataType: 'json',
             success:function(data){
-                var str = "";
+                var str;
                 for(x in data){
+                    str = "";
                     console.log(data[x]);
                     str+= "<tr><td>" + data[x].title + "</td>";
                     str+= "<td>" + data[x].summary + "</td>";
                     str+= "<td>" + data[x].key_word + "</td>";
                     str+= "<td>" + data[x].post_time.substring(0,10) +" "+ data[x].post_time.substring(12,16)  + "</td>";
                     str+= "<td>" + data[x].read_count + "</td>";
-                    str+= "<td>" + data[x].comment_count + "</td></tr>";
+                    str+= "<td>" + data[x].comment_count + "</td>";
+                    str+= "<td>" + data[x].status + "</td>";
+                    str+= "<td>" + 
+                    "<button class='btn btn-default btn-edit' id=" + "edit_" + data[x].article_id + ">编辑</button>" + 
+                    "<button class='btn btn-default btn-show' id=" + "show_" + data[x].article_id + ">显示</button>" + 
+                    "<button class='btn btn-default btn-hide' id=" + "hide_" + data[x].article_id + ">隐藏</button>" + 
+                    "</td></tr>";
                     $("#list").append(str);
 
                 }

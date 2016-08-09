@@ -19,6 +19,8 @@ var article = new database1();
 var database2 = require('./routes/database/user');
 var user = new database2();
 
+var database3 = require('./routes/database/home');
+var home = new database3();
 
 var app = express();
 
@@ -131,12 +133,61 @@ app.get('/console_article', function(req, res, next) {
 });
 
 
+/* DB: article start */
+
 app.get('/article/list', function(req, res, next) {
   article.getList("hello", function(result){
     res.send(result);
   });
 });
 
+app.post('/article', function(req, res, next) {
+  article.get(req.body.article_id, function(result){
+    res.send(result);
+  });
+});
+
+app.post('/article/update', function(req, res, next) {
+  article.update(req.body, function(result){
+    res.send(result);
+  });
+});
+
+app.post('/article/create', function(req, res, next) {
+  article.create(req.body, function(result){
+    res.send(result);
+  });
+});
+
+app.post('/article/readCountInc', function(req, res, next) {
+  article.readCountInc(req.body, function(result){
+    res.send(result);
+  });
+});
+
+app.post('/article/commentCountInc', function(req, res, next) {
+  article.commentCountInc(req.body, function(result){
+    res.send(result);
+  });
+});
+
+app.post('/article/setStatus', function(req, res, next) {
+  article.setStatus(req.body, function(result){
+    res.send(result);
+  });
+});
+
+/* DB: article end */
+
+
+
+/* DB: home start */
+
+app.post('/home/get', function(req, res, next) {
+  home.get(req.body, function(result){
+    res.send(result);
+  });
+});
 
 
 // catch 404 and forward to error handler

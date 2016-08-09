@@ -629,7 +629,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
     };
 }
 /* bootstrape editor*/
- #editor {
+/* #editor {
     max-height: 250px;
     height: 250px;
     background-color: white;
@@ -643,7 +643,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
     border-bottom-left-radius: 3px; border-top-left-radius: 3px;
     overflow: scroll;
     outline: none;
-}
+}*/
 #voiceBtn {
   width: 20px;
   color: transparent;

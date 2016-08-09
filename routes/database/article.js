@@ -23,6 +23,16 @@ function Article(){
 		});
 	}
 
+	this.get = function(article_id, callback){
+		console.log(article_id);
+		var data = [article_id];
+		var sql = "select * from article where article_id = ?";
+		connection.query(sql, data, function(err, res){
+			console.log(res);
+			callback(res);
+		});
+	}
+
 
 	this.getList = function(time, callback){
 
@@ -35,7 +45,7 @@ function Article(){
 
 
 	this.update = function(article, callback){
-		var data = ['title', 'content', 'summary', 'key_word', 1];
+		var data = [article.title, article.content, article.summary, article.key_word, article.article_id];
 		var sql = "update article set title=?, content=?, summary=?, key_word=? where article_id=?";
 		connection.query(sql, data, function(err,res){
 			callback(res);
@@ -62,6 +72,15 @@ function Article(){
 	this.commentCountInc = function(article_id, callback){
 		var data = [article_id];
 		var sql = "update article set comment_count = comment_count+1 where article_id=?";
+		connection.query(sql, data, function(err,res){
+			callback(res);
+		});
+	}
+
+	this.setStatus = function(article, callback){
+		var data = [article.status, article.article_id];
+		console.log(data);
+		var sql = "update article set status = ? where article_id=?";
 		connection.query(sql, data, function(err,res){
 			callback(res);
 		});
