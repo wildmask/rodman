@@ -108,17 +108,20 @@
       <!--main content start-->
       <section id="main-content">
           <section class="wrapper">
-		  <div class="row">
-				<div class="col-lg-12">
-					<h3 class="page-header"><i class="fa fa fa-bars"></i> Pages</h3>
-					<ol class="breadcrumb">
-						<li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
-						<li><i class="fa fa-bars"></i>Pages</li>
-						<li><i class="fa fa-square-o"></i>Pages</li>
-					</ol>
-				</div>
-			</div>
+
               <!-- page start-->
+
+              <div>
+                <ul class="nav nav-tabs">
+                  <li role="presentation" id="btn-welcome"><a href="#">Welcome</a></li>
+                  <li role="presentation" id="btn-about"><a href="#">Aboutme</a></li>
+                  <li role="presentation" id="btn-resume"><a href="#">Resume</a></li>
+                </ul>
+
+              </div>
+
+              <br/>
+
               <div>
                   <script id="editor" type="text/plain" style="width:1024px;height:500px;"></script>
                   <script type="text/javascript">
@@ -239,6 +242,79 @@
     <script src="/niceadmin/js/jquery.scrollTo.min.js"></script>
     <script src="/niceadmin/js/jquery.nicescroll.js" type="text/javascript"></script><!--custome script for all page-->
     <script src="/niceadmin/js/scripts.js"></script>
+
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+
+        // get content for different part:
+
+        var cur_name = "";
+
+        $("#btn-welcome").click(function(){
+          setEditor("welcome");
+          cur_name = welcome;
+          $("#editor").show();
+          $(this).addClass('active');
+          $("#btn-about").removeClass('active');
+          $("#btn-resume").removeClass('active');
+        });
+
+        $("#btn-about").click(function(){
+          cur_name = about;
+          setEditor("about");
+          $("#editor").show();
+          $(this).addClass('active');
+          $("#btn-welcome").removeClass('active');
+          $("#btn-resume").removeClass('active');
+        });
+
+        $("#btn-resume").click(function(){
+          cur_name = resume;
+          setEditor("resume");
+          $("#editor").show();
+          $(this).addClass('active');
+          $("#btn-about").removeClass('active');
+          $("#btn-welcome").removeClass('active');
+        });
+
+        function setEditor(name){
+          $.ajax({
+            url:'/home/get',
+            method: 'post',
+            dataType: 'json',
+            data:{
+              name: name,
+            },
+            success:function(data){
+              console.log(data);
+              UE.getEditor('editor').setContent(data[0].content);
+            },
+          });
+        }
+
+
+        // update for different part:
+        
+        $("#btn-save").click(function(){
+          
+          $.ajax({
+            url:'/home/update',
+            method: 'post',
+            dataType: 'json',
+            data:{
+              name: name,
+              content: content,
+            },
+            success: function(data){
+              console.log("data");
+            },
+          });
+        });
+        
+      })
+    </script>
+
 
 
   </body>

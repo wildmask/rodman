@@ -12,13 +12,13 @@ function Home(){
 
 
 
-	this.get = function(user, callback){
+	this.get = function(name, callback){
 
-		var data = [1];
+		var data = [name];
 
-		var sql = "select * from home";
+		var sql = "select * from home where name=?";
 		
-		connection.query(sql, function(err, res){
+		connection.query(sql, data, function(err, res){
 			console.log(res);
 			callback(res);
 		});

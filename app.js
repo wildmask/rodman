@@ -184,7 +184,7 @@ app.post('/article/setStatus', function(req, res, next) {
 /* DB: home start */
 
 app.post('/home/get', function(req, res, next) {
-  home.get(req.body, function(result){
+  home.get(req.body.name, function(result){
     res.send(result);
   });
 });
