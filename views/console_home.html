@@ -17,7 +17,6 @@
     <!--external css-->
     <!-- font icon -->
     <link href="/niceadmin/css/elegant-icons-style.css" rel="stylesheet" />
-    <link href="/niceadmin/css/font-awesome.min.css" rel="stylesheet" />
     <!-- Custom styles -->
     <link href="/niceadmin/css/style.css" rel="stylesheet">
     <link href="/niceadmin/css/style-responsive.css" rel="stylesheet" />
@@ -229,6 +228,10 @@
                       }
                   </script>
               </div>
+
+              <div>
+                <button class="btn btn-default" id="btn-save">save</button>
+              </div>
               <!-- page end-->
           </section>
       </section>
@@ -253,7 +256,7 @@
 
         $("#btn-welcome").click(function(){
           setEditor("welcome");
-          cur_name = welcome;
+          cur_name = "welcome";
           $("#editor").show();
           $(this).addClass('active');
           $("#btn-about").removeClass('active');
@@ -261,7 +264,7 @@
         });
 
         $("#btn-about").click(function(){
-          cur_name = about;
+          cur_name = "about";
           setEditor("about");
           $("#editor").show();
           $(this).addClass('active');
@@ -270,7 +273,7 @@
         });
 
         $("#btn-resume").click(function(){
-          cur_name = resume;
+          cur_name = "resume";
           setEditor("resume");
           $("#editor").show();
           $(this).addClass('active');
@@ -295,19 +298,19 @@
 
 
         // update for different part:
-        
+
         $("#btn-save").click(function(){
-          
+          var content = UE.getEditor('editor').getContent();
           $.ajax({
             url:'/home/update',
             method: 'post',
             dataType: 'json',
             data:{
-              name: name,
+              name: cur_name,
               content: content,
             },
             success: function(data){
-              console.log("data");
+              console.log(data);
             },
           });
         });

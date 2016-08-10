@@ -7,23 +7,13 @@ var article = new database1();
 var database2 = require('./database/user');
 var user = new database2();
 
-
+var database3 = require('./database/home');
+var home = new database3();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index');
 });
-
-// test page
-router.get('/test', function(req, res, next) {
-  res.render('test');
-});
-
-// ueditor test page
-router.get('/ueditor', function(req, res, next) {
-  res.render('ueditor');
-});
-
 
 
 // database operation
@@ -34,16 +24,11 @@ router.get('/database', function(req, res, next) {
     });
 });
 
-// test for database operation
-router.get('/test/update', function(req, res, next) {
-    article.update("hello", function(result){
-      res.send(result);
-    });
-    article.readCountInc(1, function(result){
-      console.log("hello");
-    });
+router.post('/home/getall', function(req, res, next) {
+  home.getall("hello", function(result){
+    res.send(result);
+  });
 });
-
 
 
 module.exports = router;

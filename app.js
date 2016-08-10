@@ -82,7 +82,7 @@ app.use(session({
 app.use(function(req,res,next){
   console.log("user:" + req.session.user);
   if (!req.session.user) {
-    if(req.url=="/login"){
+    if(req.url=="/login"|| req.url=="/"){
       next();
     }else{
       res.redirect('login');
@@ -189,6 +189,15 @@ app.post('/home/get', function(req, res, next) {
   });
 });
 
+
+app.post('/home/update', function(req, res, next) {
+  home.update(req.body, function(result){
+    res.send(result);
+  });
+});
+
+
+/* DB: home end */
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

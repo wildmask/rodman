@@ -18,7 +18,6 @@ function Article(){
 		var sql = "select * from test";
 		
 		connection.query(sql, function(err, res){
-			console.log(res);
 			callback(res);
 		});
 	}
@@ -28,7 +27,6 @@ function Article(){
 		var data = [article_id];
 		var sql = "select * from article where article_id = ?";
 		connection.query(sql, data, function(err, res){
-			console.log(res);
 			callback(res);
 		});
 	}
@@ -38,7 +36,6 @@ function Article(){
 
 		var sql = "select * from article";
 		connection.query(sql, function(err, res){
-			console.log(res);
 			callback(res);
 		});
 	}
