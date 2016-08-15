@@ -86,16 +86,25 @@
 				</div>
 			</div>
               <!-- page start-->
+
+              <div>
+                <button id="create-article" class="btn btn-warning"> 创建新文档 </button>
+              </div>
+
+              <br/>
+
+              <div>
+
               <table class="table" id="list" style="background:white;">
                 <colgroup>
                     <col width="10%"></col>
-                    <col width="30%"></col>
+                    <col width="25%"></col>
                     <col width="10%"></col>
                     <col width="10%"></col>
                     <col width="5%"></col>
                     <col width="5%"></col>
                     <col width="5%"></col>
-                    <col width="15%"></col>
+                    <col width="20%"></col>
                 </colgroup>
                 <tr>
                     <th>标题</th>
@@ -110,6 +119,7 @@
                 </tr>
 
               </table>
+              </div>
               <!-- page end-->
           </section>
       </section>
@@ -130,6 +140,48 @@
         console.log("hello");
 
 
+        // 创建按钮添加功能
+
+        $("#create-article").click(function(){
+            console.log("create");
+
+            $.ajax({
+                url: '/article/create', 
+                method: 'post',
+                dataType: 'json',
+                success: function(data){
+                    console.log("创建成功");
+                    location.reload();
+                }
+
+            });
+
+        });
+
+        // 删除按钮添加功能
+
+        $("#list").delegate("button.btn-delete", "click", function(){
+            var this_btn = $(this);
+            var article_id = this_btn.attr("id").substring(7);
+            
+            var ret = confirm("确认删除？");
+
+            if(ret){
+                $.ajax({
+                    url: '/article/delete',
+                    method: 'post',
+                    dataType: 'json',
+                    data:{
+                        article_id: article_id,
+                    },
+                    success:function(data){
+                        location.reload();
+                    }
+                });
+            }
+        });
+
+        // 编辑按钮添加功能
 
         $("#list").delegate("button.btn-edit", "click", function(){
             var this_btn = $(this);
@@ -137,6 +189,8 @@
             location.href = "/console_article?id="+article_id;
         });
 
+
+        // 显示按钮添加功能
 
         $("#list").delegate("button.btn-show", "click", function(){
             var this_btn = $(this);
@@ -150,11 +204,13 @@
                     article_id: article_id,
                 },
                 success:function(data){
-                    console.log("yes");
+                    location.reload();
                 }
             });
         });
 
+
+        // 隐藏按钮添加功能
 
         $("#list").delegate("button.btn-hide", "click", function(){
             var this_btn = $(this);
@@ -168,7 +224,7 @@
                     article_id: article_id,
                 },
                 success:function(data){
-                    console.log("yes");
+                    location.reload();
                 }
             });
         });
@@ -185,7 +241,7 @@
                     str+= "<tr><td>" + data[x].title + "</td>";
                     str+= "<td>" + data[x].summary + "</td>";
                     str+= "<td>" + data[x].key_word + "</td>";
-                    str+= "<td>" + data[x].post_time.substring(0,10) +" "+ data[x].post_time.substring(12,16)  + "</td>";
+                    str+= "<td>" + data[x].post_time  + "</td>";
                     str+= "<td>" + data[x].read_count + "</td>";
                     str+= "<td>" + data[x].comment_count + "</td>";
                     str+= "<td>" + data[x].status + "</td>";
@@ -193,6 +249,7 @@
                     "<button class='btn btn-default btn-edit' id=" + "edit_" + data[x].article_id + ">编辑</button>" + 
                     "<button class='btn btn-default btn-show' id=" + "show_" + data[x].article_id + ">显示</button>" + 
                     "<button class='btn btn-default btn-hide' id=" + "hide_" + data[x].article_id + ">隐藏</button>" + 
+                    "<button class='btn btn-default btn-delete' id=" + "delete_" + data[x].article_id + ">删除</button>" + 
                     "</td></tr>";
                     $("#list").append(str);
 

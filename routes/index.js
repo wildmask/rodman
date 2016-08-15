@@ -15,6 +15,16 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });
 
+router.get('/article', function(req, res, next) {
+  res.render('article');
+});
+
+
+router.get('/article/latest', function(req, res, next) {
+  article.getList("hello", function(result){
+    res.send(result);
+  });
+});
 
 // database operation
 router.get('/database', function(req, res, next) {
@@ -29,6 +39,8 @@ router.post('/home/getall', function(req, res, next) {
     res.send(result);
   });
 });
+
+
 
 
 module.exports = router;

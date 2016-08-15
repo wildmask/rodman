@@ -115,6 +115,7 @@
                   <li role="presentation" id="btn-welcome"><a href="#">Welcome</a></li>
                   <li role="presentation" id="btn-about"><a href="#">Aboutme</a></li>
                   <li role="presentation" id="btn-resume"><a href="#">Resume</a></li>
+                  <li role="presentation" id="btn-contact"><a href="#">Contact</a></li>
                 </ul>
 
               </div>
@@ -255,31 +256,38 @@
         var cur_name = "";
 
         $("#btn-welcome").click(function(){
-          setEditor("welcome");
-          cur_name = "welcome";
-          $("#editor").show();
-          $(this).addClass('active');
-          $("#btn-about").removeClass('active');
-          $("#btn-resume").removeClass('active');
+          activeClass("welcome");
+          removeClass();
         });
 
         $("#btn-about").click(function(){
-          cur_name = "about";
-          setEditor("about");
-          $("#editor").show();
-          $(this).addClass('active');
-          $("#btn-welcome").removeClass('active');
-          $("#btn-resume").removeClass('active');
+          activeClass("about");
+          removeClass();
         });
 
         $("#btn-resume").click(function(){
-          cur_name = "resume";
-          setEditor("resume");
-          $("#editor").show();
-          $(this).addClass('active');
+          activeClass("resume");
+          removeClass();
+        });
+
+        $("#btn-contact").click(function(){
+          activeClass("contact");
+          removeClass();
+        });
+
+        function removeClass(){
           $("#btn-about").removeClass('active');
           $("#btn-welcome").removeClass('active');
-        });
+          $("#btn-resume").removeClass('active');
+          $("#btn-contact").removeClass('active');
+        }
+
+        function activeClass(name){
+          setEditor(name);
+          cur_name = name;
+          $("#editor").show();
+          $("#btn-"+name).addClass('active');
+        }
 
         function setEditor(name){
           $.ajax({

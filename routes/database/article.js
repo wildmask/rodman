@@ -34,7 +34,7 @@ function Article(){
 
 	this.getList = function(time, callback){
 
-		var sql = "select * from article";
+		var sql = "select * from article order by post_time desc";
 		connection.query(sql, function(err, res){
 			callback(res);
 		});
@@ -44,6 +44,16 @@ function Article(){
 	this.update = function(article, callback){
 		var data = [article.title, article.content, article.summary, article.key_word, article.article_id];
 		var sql = "update article set title=?, content=?, summary=?, key_word=? where article_id=?";
+		connection.query(sql, data, function(err,res){
+			callback(res);
+		});
+	}
+
+	this.delete = function(article, callback){
+		var data = [article.article_id];
+		console.log(data);
+		var sql = "delete from article where article_id=?";
+		console.log(sql);
 		connection.query(sql, data, function(err,res){
 			callback(res);
 		});
