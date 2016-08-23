@@ -20,16 +20,32 @@ router.get('/article', function(req, res, next) {
 });
 
 
-router.get('/article/latest', function(req, res, next) {
-  article.getList("hello", function(result){
+router.get('/article_list', function(req, res, next) {
+  res.render('article_list');
+});
+
+router.get('/article/all', function(req, res, next) {
+  article.getList("", function(result){
+    res.send(result);
+  });
+});
+
+
+router.get('/article/list', function(req, res, next) {
+  article.getList("", function(result){
+    res.send(result);
+  });
+});
+
+router.post('/article/detail', function(req, res, next) {
+  article.get(req.body.article_id, function(result){
     res.send(result);
   });
 });
 
 // database operation
 router.get('/database', function(req, res, next) {
-    console.log("hello");
-    article.save("hello", function(result){
+    article.save("", function(result){
       res.send(result);
     });
 });

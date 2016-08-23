@@ -41,12 +41,12 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand topnav" href="#">Rodman</a>
+                <a class="navbar-brand topnav" href="/">Rodman</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li> <a href="#welcome">Home</a> </li>
+                    <li> <a href="/">Home</a> </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -74,13 +74,16 @@
     <!-- /.intro-header -->
 
 
-
     <div class="container main-part">
 
         <div "width:80%">
             <div class="panel panel-default">
-              <div class="panel-heading">文章列表</div>
+              <div class="panel-heading">Articles</div>
               <div class="panel-body">
+
+                <div id="articles">
+
+                </div>
                 
               </div>
             </div>
@@ -90,6 +93,9 @@
     <!-- /.container -->
 
 
+
+
+
     <!-- jQuery -->
     <script src="/js/jquery.js"></script>
 
@@ -97,30 +103,43 @@
     <script src="/js/bootstrap.min.js"></script>
 
     <script type="text/javascript">
-
-        function getUrlParam(name) {
-          console.log(window.location.search);
-            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
-            var r = window.location.search.substr(1).match(reg);  
-            console.log(r);
-            if (r != null) return unescape(r[2]); return null; //返回参数值
-        }
-        var article_id = getUrlParam('id');
-
+    $(document).ready(function(){
 
         $.ajax({
-            url:'/article/detail',
-            method:'post',
+            url: '/article/all',
+            method: 'get',
             dataType: 'json',
-            data:{
-                article_id: article_id,
-            },
             success: function(data){
+
+                for (x in data){
+
+                    var str = "";
+                    str += "<div class='article-item' id=" + data[x].article_id + ">";
+                    str += "<div class='title'>"+ data[x].title + "</div>";
+                    str += "<div class='info'>" + 
+                    "<span class='glyphicon glyphicon-time' aria-hidden='true'></span> &nbsp;"+  data[x].post_time +  "&nbsp;&nbsp;&nbsp;" +
+                    "<span class='glyphicon glyphicon-eye-open' aria-hidden='true'></span>&nbsp;" + data[x].read_count + "&nbsp;&nbsp;&nbsp;" +
+                    "<span class='glyphicon glyphicon-comment' aria-hidden='true'></span>&nbsp;" + data[x].comment_count + "&nbsp;&nbsp;&nbsp;" +
+                    "</div>";
+                    str += "<div class='content'>" + data[x].content + "</div>";
+                    str += "</div>";
+                    $("#articles").append(str);
+                }
                 console.log(data);
-            }
+            },
         });
 
+
+        $("div#articles").delegate(".article-item","click", function(){
+            var id = $(this).attr("id");
+            console.log("click");
+            location.href="/article?id="+id;
+        });
+
+    });
+
     </script>
+
 
 
     <style type="text/css">
@@ -133,6 +152,33 @@
         border-radius: 5px;
         box-shadow: 0px 5px 5px;
         padding: 20px 20px;
+    }
+
+    .article-item{
+        border-bottom: 1px solid #ccc;
+        padding: 10px 10px;
+        cursor: pointer;
+    }
+
+    .title{
+        font-size: 20px;
+        margin-bottom: 5px;    
+    }
+
+    .info{
+        font-size: 14px;
+        font-family: "Times New Roman",Georgia,Serif;
+        color: #666;
+        font-weight: 100;
+        margin-bottom: 10px;
+
+    }
+
+    .content{
+        font-size: 14px;
+        font-family: "Times New Roman",Georgia,Serif;
+        color: #333;
+        font-weight: 200;
     }
 
     </style>
